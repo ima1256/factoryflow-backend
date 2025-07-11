@@ -28,5 +28,19 @@ const machineSchema = new Schema({
   alerts: [String],
 });
 
+// Añadimos esta opción para que al hacer JSON el modelo devuelva id en lugar de _id
+machineSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: (_doc, ret) => {
+    return {
+      ...ret,
+      id: ret._id,
+      _id: undefined,  // en vez de delete
+    };
+  },
+});
+
+
 const Machine = model("Machine", machineSchema);
 export default Machine;
