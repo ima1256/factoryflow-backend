@@ -34,8 +34,13 @@ router.post("/", async (req: Request, res: Response) => {
 // PUT actualizar máquina por ID
 router.put("/:id", async (req: Request, res: Response) => {
   try {
-    const updatedMachine = await Machine.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedMachine) return res.status(404).json({ message: "Machine not found" });
+    const updatedMachine = await Machine.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedMachine)
+      return res.status(404).json({ message: "Machine not found" });
     res.json(updatedMachine);
   } catch {
     res.status(400).json({ message: "Invalid update data or ID" });
@@ -46,7 +51,8 @@ router.put("/:id", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
   try {
     const deletedMachine = await Machine.findByIdAndDelete(req.params.id);
-    if (!deletedMachine) return res.status(404).json({ message: "Machine not found" });
+    if (!deletedMachine)
+      return res.status(404).json({ message: "Machine not found" });
     res.json({ message: "Machine deleted", id: req.params.id });
   } catch {
     res.status(400).json({ message: "Invalid ID" });
@@ -54,3 +60,28 @@ router.delete("/:id", async (req: Request, res: Response) => {
 });
 
 export default router;
+
+// const https = require("https");
+
+// const URL = "https://tuservidor.onrender.com"; // Reemplaza por tu URL
+
+// setInterval(() => {
+//   https
+//     .get(URL, (res) => {
+//       let data = "";
+
+//       // Acumula los datos que llegan
+//       res.on("data", (chunk) => {
+//         data += chunk;
+//       });
+
+//       // Cuando termina la respuesta
+//       res.on("end", () => {
+//         console.log(`[${new Date().toISOString()}] Ping: ${res.statusCode}`);
+//         console.log(`[${new Date().toISOString()}] Respuesta: ${data}`);
+//       });
+//     })
+//     .on("error", (err) => {
+//       console.error(`[${new Date().toISOString()}] Error:`, err.message);
+//     });
+// }, 5 * 60 * 1000); // Cada 5 minutos
